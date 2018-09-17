@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="utf-8">
+    <style>
+        #canvas1 {
+            background-color: rgb(0, 37, 247);
+            /*background-color: rgb(57, 223, 27);*/
+            border: 30px solid rgb(255, 0, 0);
+        }
+    </style>
+    <script>
+        'use strict';
+        window.onerror = function (e) { alert('Meine Fehlermeldung!: ' + e) };
+        window.onload = function () {
+
+            if (canvas1.getContext) {
+
+                let c = canvas1.getContext('2d');
+
+                //Selbststart :)))
+                setTimeout(animation_aufruf, 1000);
+                
+                button1.onclick = animation_aufruf;
+                button2.onclick = function () {
+                    alert('Unterbruch :)');
+                }
+
+                function rand(min, max) {
+                    return Math.floor(Math.random() * (max - min + 1)) + min;
+                }
+
+                function animation_aufruf() {
+                    var arr = [];
+                    for (var x = 0; x < 20; x++) {
+                        arr.push(new Kugel(rand(100, canvas1.width - 100), rand(100, canvas1.height - 100), //x, y   
+                        'rgb(' + rand(0, 255) + ' , ' +  rand(0, 255) + ' , ' + rand(0, 255) + ')' , //Farbe
+                         rand(10, 150))); // radius
+
+                    }
+
+                    (function animation() {
+                        //c.clearRect(0, 0, canvas1.width, canvas1.height);
+                        for (var x = 0; x < arr.length; x++) {
+                            arr[x].sequenz();
+                        }
+                        requestAnimationFrame(animation);
+                    })();
+                }
+
+                //#region Kontstruktor Funktion
+                function Kugel(x, y, farbe, radius) {
+
+                    this.x = x;
+                    this.y = y;
+                    this.farbe = farbe;
+                    this.radius = radius;
+
+                    //Umkehrflags
+                    this.flag_x = true;
+                    this.flag_y = true;
+
+                    //Für die innere Funktion
+                    var this_ = this;
+
+                    this.sequenz = function () {
+                        //Animation
+                        c.beginPath();
+                        c.arc(this_.x, this_.y, this.radius, 0, (Math.PI / 180) * 360, false);
+                        //Füllfarbe
+                        c.fillStyle = this.farbe;
+                        c.fill();
+                        c.stroke();
+                        c.closePath();
+
+                        if (this_.flag_x) {
+                            this_.x += 2;
+                            if (this_.x >= (canvas1.width - this.radius)) this_.flag_x = false;
+                        } else {
+                            this_.x -= 2;
+                            if (this_.x <= this.radius) this_.flag_x = true;
+                        }
+
+                        if (this_.flag_y) {
+                            this_.y += 3;
+                            if (this_.y >= (canvas1.height - this.radius)) this_.flag_y = false;
+                        } else {
+                            this_.y -= 3;
+                            if (this_.y <= this.radius) this_.flag_y = true;
+                        }
+                    }
+                }
+                //#endregion Kontstruktor Funktion   
+            }
+        }
+    </script>
+</head>
+
+<body>
+
+    <button id="button1">Starten</button>
+    <button id="button2">Anhalten</button>
+
+    <canvas id="canvas1" width="1850" height="850"></canvas>
+
+</body>
+
+</html>
