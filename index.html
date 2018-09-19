@@ -3,6 +3,17 @@
 
 <head>
     <meta charset="utf-8">
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-125935075-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-125935075-1');
+    </script>
+
     <style>
         #canvas1 {
             background-color: rgb(0, 37, 247);
@@ -21,7 +32,7 @@
 
                 //Selbststart :)))
                 setTimeout(animation_aufruf, 1000);
-                
+
                 button1.onclick = animation_aufruf;
                 button2.onclick = function () {
                     alert('Unterbruch :)');
@@ -35,8 +46,8 @@
                     var arr = [];
                     for (var x = 0; x < 20; x++) {
                         arr.push(new Kugel(rand(100, canvas1.width - 100), rand(100, canvas1.height - 100), //x, y   
-                        'rgb(' + rand(0, 255) + ' , ' +  rand(0, 255) + ' , ' + rand(0, 255) + ')' , //Farbe
-                         rand(10, 150))); // radius
+                            'rgb(' + rand(0, 255) + ' , ' + rand(0, 255) + ' , ' + rand(0, 255) + ')', //Farbe
+                            rand(10, 150))); // radius
 
                     }
 
